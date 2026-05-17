@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>けいさんれんしゅう</title>
+
+<style>
+    body{
+        font-family:"Yu Gothic","Hiragino Maru Gothic ProN",sans-serif;
+        padding:40px;
+        background:#ffffff;
+    }
+
+    .top-area{
+        display:grid;
+        grid-template-columns: 380px 420px 180px;
+        align-items:start;
+        margin-bottom:70px;
+    }
+
+    h1{
+        font-size:34px;
+        margin:0;
+        font-weight:bold;
+    }
+
+    .menu{
+        display:flex;
+        flex-direction:column;
+    }
+
+    .menu button{
+        height:56px;
+        font-size:28px;
+        background:#efefef;
+        border:1px solid #777;
+        cursor:pointer;
+    }
+
+    .shortcut{
+        font-size:22px;
+        line-height:56px;
+        margin-left:20px;
+    }
+
+    .problem{
+        display:flex;
+        align-items:center;
+        gap:22px;
+        margin-bottom:18px;
+    }
+
+    .num{
+        width:150px;
+        height:84px;
+
+        border:1px solid #333;
+
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+
+        font-size:36px;
+
+        padding-right:16px;
+        box-sizing:border-box;
+    }
+
+    .answer{
+        width:150px;
+        height:84px;
+
+        border:2px solid #444;
+
+        background:#fff2cc;
+
+        font-size:36px;
+        text-align:right;
+
+        padding-right:16px;
+        box-sizing:border-box;
+    }
+
+    .operator,
+    .equal{
+        font-size:42px;
+    }
+
+    .result-box{
+        min-width:260px;
+        height:84px;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        font-size:34px;
+        font-weight:bold;
+
+        border-radius:2px;
+    }
+
+    .next-guide{
+        margin-left:640px;
+        font-size:24px;
+        margin-bottom:45px;
+    }
+
+    .hint-title{
+        font-size:28px;
+        font-weight:bold;
+        margin-bottom:10px;
+    }
+
+    .hint-grid{
+        display:grid;
+        grid-template-columns:240px 240px;
+        row-gap:8px;
+        column-gap:20px;
+
+        font-size:28px;
+        line-height:1.2;
+        white-space:nowrap;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="top-area">
+
+    <h1 id="title">たしざん れんしゅう</h1>
+
+    <div class="menu">
+        <button onclick="setMode('add')">
+            つぎのもんだい（たしざん）
+        </button>
+
+        <button onclick="setMode('sub')">
+            つぎのもんだい（ひきざん）
+        </button>
+    </div>
+
+    <div>
+        <div class="shortcut">※Ctrl+z</div>
+        <div class="shortcut">※Ctrl+x</div>
+    </div>
+
+</div>
+
+<div class="problem">
+
+    <div class="num" id="num1"></div>
+
+    <div class="operator" id="operator">＋</div>
+
+    <div class="num" id="num2"></div>
+
+    <div class="equal">＝</div>
+
+    <input class="answer" id="answer" type="text" inputmode="numeric">
+
+    <div class="result-box" id="resultBox"></div>
+
+</div>
+
+<div class="next-guide" id="nextGuide">
+    ▶「せいかい」したらEnterおしてね
+</div>
+
+<div class="hint-title">
+    💡ヒント
+</div>
+
+<div class="hint-grid">
+
+    <div id="hint1L"></div>
+    <div id="hint1R"></div>
+
+    <div id="hint2L"></div>
+    <div id="hint2R"></div>
+
+    <div id="hint3L"></div>
+    <div id="hint3R"></div>
+
+    <div id="hint4L"></div>
+    <div id="hint4R"></div>
+
+</div>
+
+<script>
+
+let mode = "add";
+
+let num1 = 0;
+let num2 = 0;
+
+let answered = false;
+
+const titleEl = document.getElementById("title");
+
+const num1El = document.getElementById("num1");
+const num2El = document.getElementById("num2");
+
+const operatorEl = document.getElementById("operator");
+
+const answerEl = document.getElementById("answer");
+
+const resultBox = document.getElementById("resultBox");
+
+const nextGuide = document.getElementById("nextGuide");
+
+function rand10(){
+    return Math.floor(Math.random() * 10) + 1;
+}
+
+function rand20(){
+    return Math.floor(Math.random() * 20) + 1;
+}
+
+function appleLine(n){
+
+    return "🟥".repeat(n) + "⬜".repeat(5 - n);
+}
+
+function setHints(left,right){
+
+    let leftArr = [0,0,0,0];
+    let rightArr = [0,0,0,0];
+
+    for(let i=0;i<4;i++){
+
+        leftArr[i] = Math.min(5, Math.max(0, left - i * 5));
+        rightArr[i] = Math.min(5, Math.max(0, right - i * 5));
+    }
+
+    document.getElementById("hint1L").textContent = appleLine(leftArr[0]);
+    document.getElementById("hint1R").textContent = appleLine(rightArr[0]);
+
+    document.getElementById("hint2L").textContent = appleLine(leftArr[1]);
+    document.getElementById("hint2R").textContent = appleLine(rightArr[1]);
+
+    document.getElementById("hint3L").textContent = appleLine(leftArr[2]);
+    document.getElementById("hint3R").textContent = appleLine(rightArr[2]);
+
+    document.getElementById("hint4L").textContent = appleLine(leftArr[3]);
+    document.getElementById("hint4R").textContent = appleLine(rightArr[3]);
+}
+
+function setMode(newMode){
+
+    mode = newMode;
+
+    nextQuestion();
+}
+
+function nextQuestion(){
+
+    answered = false;
+
+    resultBox.textContent = "";
+    resultBox.style.background = "transparent";
+
+    answerEl.value = "";
+
+    if(mode === "add"){
+
+        titleEl.textContent = "たしざん れんしゅう";
+
+        operatorEl.textContent = "＋";
+
+        num1 = rand10();
+        num2 = rand10();
+
+    }else{
+
+        titleEl.textContent = "ひきざん れんしゅう";
+
+        operatorEl.textContent = "－";
+
+        do{
+
+            num1 = rand20();
+            num2 = rand20();
+
+        }while(num1 < num2);
+    }
+
+    num1El.textContent = num1;
+    num2El.textContent = num2;
+
+    setHints(num1,num2);
+
+    answerEl.focus();
+}
+
+function checkAnswer(){
+
+    if(answerEl.value === "") return;
+
+    const answer = Number(answerEl.value);
+
+    const correct = mode === "add"
+        ? num1 + num2
+        : num1 - num2;
+
+    if(answer === correct){
+
+        answered = true;
+
+        resultBox.textContent = "せいかい🌸";
+
+        resultBox.style.background = "#f7cfd7";
+        resultBox.style.color = "#c00000";
+
+    }else{
+
+        resultBox.textContent = "ちがうよ😱";
+
+        resultBox.style.background = "#d7f0d7";
+        resultBox.style.color = "#008000";
+
+        answerEl.select();
+    }
+}
+
+answerEl.addEventListener("keydown",function(event){
+
+    if(event.key === "Enter"){
+
+        if(answered){
+
+            nextQuestion();
+
+        }else{
+
+            checkAnswer();
+        }
+    }
+});
+
+document.addEventListener("keydown",function(event){
+
+    if(event.ctrlKey && event.key.toLowerCase() === "z"){
+
+        event.preventDefault();
+
+        setMode("add");
+    }
+
+    if(event.ctrlKey && event.key.toLowerCase() === "x"){
+
+        event.preventDefault();
+
+        setMode("sub");
+    }
+});
+
+nextQuestion();
+
+</script>
+
+</body>
+</html>
