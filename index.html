@@ -164,16 +164,38 @@ h1{
 }
 
 .hint-grid{
-    display:grid;
-    grid-template-columns:max-content max-content;
-    row-gap:8px;
-    column-gap:40px;
-    align-items:start;
+    display:block;
 }
 
-.apple-row{
+.ten-hint{
     display:flex;
-    gap:6px;
+    flex-direction:column;
+    gap:14px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.ten-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.ten-label{
+    width:70px;
+}
+
+.ten-boxes{
+    display:flex;
+    gap:4px;
+}
+
+.ten-gap-small{
+    width:8px;
+}
+
+.ten-gap-large{
+    width:18px;
 }
 
 .box{
@@ -189,6 +211,42 @@ h1{
 
 .off{
     background:#f2f2f2;
+}
+
+.cross{
+    background:#f2f2f2;
+    position:relative;
+}
+
+.cross::before,
+.cross::after{
+    content:"";
+    position:absolute;
+    top:12px;
+    left:3px;
+    width:18px;
+    height:2px;
+    background:#222;
+}
+
+.cross::before{
+    transform:rotate(45deg);
+}
+
+.cross::after{
+    transform:rotate(-45deg);
+}
+
+.hint-button{
+    min-height:56px;
+    font-size:22px;
+    padding:8px 18px;
+    border:1px solid #777;
+    background:#f2f2f2;
+    border-radius:8px;
+    white-space:nowrap;
+    cursor:pointer;
+    margin-top:14px;
 }
 
 .multi-grid{
@@ -217,18 +275,6 @@ h1{
     font-size:36px;
     font-weight:bold;
     margin-bottom:14px;
-}
-
-.hint-button{
-    min-height:56px;
-    font-size:22px;
-    padding:8px 18px;
-    border:1px solid #777;
-    background:#f2f2f2;
-    border-radius:8px;
-    white-space:nowrap;
-    cursor:pointer;
-    margin-top:14px;
 }
 
 .kuku-table-wrap{
@@ -300,13 +346,7 @@ h1{
         font-size:20px;
     }
 
-    .level-label{
-        width:100%;
-        margin-bottom:4px;
-    }
-
     .level-buttons{
-        display:grid;
         grid-template-columns:1fr 1fr;
         gap:8px;
     }
@@ -314,7 +354,6 @@ h1{
     .level-area button{
         height:44px;
         font-size:20px;
-        border-radius:8px;
     }
 
     .status-area{
@@ -363,14 +402,25 @@ h1{
         border-radius:10px;
     }
 
-    .hint-grid{
-        grid-template-columns:max-content max-content;
-        column-gap:40px;
+    .ten-hint{
+        font-size:20px;
+        gap:12px;
+    }
+
+    .ten-label{
+        width:54px;
     }
 
     .box{
-        width:24px;
-        height:24px;
+        width:22px;
+        height:22px;
+    }
+
+    .cross::before,
+    .cross::after{
+        top:9px;
+        left:2px;
+        width:14px;
     }
 
     .multi-grid{
@@ -541,15 +591,119 @@ function clearHints(){
     }
 }
 
-function makeBoxRow(count){
-    let html = '<div class="apple-row">';
+function makeBox(type){
+    return `<span class="box ${type}"></span>`;
+}
 
-    for(let i = 0; i < 5; i++){
-        html += `<span class="box ${i < count ? "on" : "off"}"></span>`;
+function makeTenBoxes(value){
+    let html = '<div class="ten-boxes">';
+
+    for(let i = 1; i <= 20; i++){
+        if(i === 6 || i === 16){
+            html += '<span class="ten-gap-small"></span>';
+        }
+
+        if(i === 11){
+            html += '<span class="ten-gap-large"></span>';
+        }
+
+        html += makeBox(i <= value ? "on" : "off");
     }
 
     html += '</div>';
     return html;
+}
+
+function makeSubCrossBoxes(total, minus){
+    let html = '<div class="ten-boxes">';
+    const remain = total - minus;
+
+    for(let i = 1; i <= 20; i++){
+        if(i === 6 || i === 16){
+            html += '<span class="ten-gap-small"></span>';
+        }
+
+        if(i === 11){
+            html += '<span class="ten-gap-large"></span>';
+        }
+
+        if(i <= remain){
+            html += makeBox("on");
+        }else if(i <= total){
+            html += makeBox("cross");
+        }else{
+            html += makeBox("off");
+        }
+    }
+
+    html += '</div>';
+    return html;
+}
+
+function makeAddHintStage1(a,b){
+    return `
+        <div class="ten-hint">
+            <div class="ten-row">
+                <div class="ten-label">${a}</div>
+                ${makeTenBoxes(a)}
+            </div>
+
+            <div class="ten-row">
+                <div class="ten-label">+ ${b}</div>
+                ${makeTenBoxes(b)}
+            </div>
+
+            <button class="hint-button" onclick="showAddSecondHint()">
+                こたえのヒントを見る
+            </button>
+        </div>
+    `;
+}
+
+function showAddSecondHint(){
+    const total = num1 + num2;
+
+    document.getElementById("hint2L").innerHTML = `
+        <div class="ten-hint">
+            <div class="ten-row">
+                <div class="ten-label">= ${total}</div>
+                ${makeTenBoxes(total)}
+            </div>
+        </div>
+    `;
+}
+
+function makeSubHintStage1(a,b){
+    return `
+        <div class="ten-hint">
+            <div class="ten-row">
+                <div class="ten-label">${a}</div>
+                ${makeTenBoxes(a)}
+            </div>
+
+            <div class="ten-row">
+                <div class="ten-label">- ${b}</div>
+                ${makeSubCrossBoxes(a,b)}
+            </div>
+
+            <button class="hint-button" onclick="showSubSecondHint()">
+                こたえのヒントを見る
+            </button>
+        </div>
+    `;
+}
+
+function showSubSecondHint(){
+    const remain = num1 - num2;
+
+    document.getElementById("hint2L").innerHTML = `
+        <div class="ten-hint">
+            <div class="ten-row">
+                <div class="ten-label">= ${remain}</div>
+                ${makeTenBoxes(remain)}
+            </div>
+        </div>
+    `;
 }
 
 function makeMultiGrid(rows, cols){
@@ -613,8 +767,20 @@ function showDivisionSecondHint(){
         = makeMultiGrid(num2, correctAnswer);
 }
 
-function setHints(left,right){
+function setHints(){
     clearHints();
+
+    if(mode === "add"){
+        document.getElementById("hint1L").innerHTML
+            = makeAddHintStage1(num1, num2);
+        return;
+    }
+
+    if(mode === "sub"){
+        document.getElementById("hint1L").innerHTML
+            = makeSubHintStage1(num1, num2);
+        return;
+    }
 
     if(mode === "mul"){
         document.getElementById("hint1L").innerHTML
@@ -643,17 +809,6 @@ function setHints(left,right){
             `;
 
         return;
-    }
-
-    for(let i = 0; i < 4; i++){
-        const leftCount = Math.min(5, Math.max(0, left - i * 5));
-        const rightCount = Math.min(5, Math.max(0, right - i * 5));
-
-        document.getElementById(`hint${i + 1}L`).innerHTML
-            = makeBoxRow(leftCount);
-
-        document.getElementById(`hint${i + 1}R`).innerHTML
-            = makeBoxRow(rightCount);
     }
 }
 
@@ -733,7 +888,7 @@ function nextQuestion(){
     num1El.textContent = num1;
     num2El.textContent = num2;
 
-    setHints(num1,num2);
+    setHints();
 
     answerEl.focus();
 }
