@@ -6,7 +6,6 @@
 <title>けいさんれんしゅう</title>
 
 <style>
-
 body{
     font-family:"Yu Gothic","Hiragino Maru Gothic ProN",sans-serif;
     padding:16px;
@@ -14,12 +13,12 @@ body{
 }
 
 .top-area{
-    margin-bottom:24px;
+    margin-bottom:22px;
 }
 
 h1{
-    font-size:28px;
-    margin-bottom:16px;
+    font-size:26px;
+    margin-bottom:14px;
 }
 
 .menu{
@@ -29,20 +28,20 @@ h1{
 }
 
 .menu button{
-    height:50px;
-    font-size:22px;
-    border-radius:10px;
+    height:42px;
+    font-size:20px;
+    border-radius:8px;
     border:1px solid #777;
     background:#efefef;
 }
 
 .level-area{
-    margin-top:14px;
+    margin-top:12px;
     display:none;
 }
 
 .level-label{
-    font-size:22px;
+    font-size:20px;
     margin-bottom:8px;
 }
 
@@ -53,9 +52,9 @@ h1{
 }
 
 .level-buttons button{
-    height:48px;
-    font-size:22px;
-    border-radius:10px;
+    height:38px;
+    font-size:18px;
+    border-radius:8px;
     border:1px solid #777;
     background:#efefef;
 }
@@ -67,72 +66,70 @@ h1{
 
 .status-area{
     display:flex;
-    gap:20px;
+    gap:14px;
     flex-wrap:wrap;
-    font-size:22px;
+    font-size:18px;
     font-weight:bold;
-    margin-bottom:26px;
+    margin-bottom:18px;
 }
 
 .problem{
     display:flex;
+    flex-wrap:nowrap;
     align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
+    gap:10px;
+    margin-bottom:16px;
 }
 
-.num{
-    width:92px;
-    height:62px;
+.num,
+.answer{
+    width:78px;
+    height:54px;
     border:1px solid #333;
     display:flex;
     align-items:center;
     justify-content:flex-end;
-    padding-right:14px;
-    font-size:30px;
+    padding-right:12px;
+    font-size:26px;
+    font-family:"Yu Gothic","Hiragino Maru Gothic ProN",sans-serif;
+    font-weight:normal;
     box-sizing:border-box;
 }
 
 .answer{
-    width:92px;
-    height:62px;
     border:2px solid #444;
     background:#fff2cc;
-    font-size:30px;
     text-align:right;
-    padding-right:14px;
-    box-sizing:border-box;
 }
 
 .operator,
 .equal{
-    font-size:34px;
+    font-size:28px;
 }
 
 .result-box{
     width:100%;
-    min-height:64px;
+    min-height:52px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:28px;
+    font-size:22px;
     font-weight:bold;
-    border-radius:12px;
-    margin-top:10px;
-    padding:10px;
+    border-radius:10px;
+    margin-top:8px;
+    padding:8px;
     box-sizing:border-box;
 }
 
 .action-area{
-    margin-bottom:36px;
+    margin-bottom:28px;
 }
 
 .action-area button{
     width:100%;
-    height:64px;
+    height:58px;
     margin-bottom:10px;
-    font-size:28px;
+    font-size:24px;
     border-radius:10px;
     border:1px solid #777;
     background:#efefef;
@@ -144,15 +141,15 @@ h1{
 }
 
 .hint-title{
-    font-size:28px;
+    font-size:24px;
     font-weight:bold;
-    margin-bottom:12px;
+    margin-bottom:10px;
 }
 
 .ten-hint{
     display:flex;
     flex-direction:column;
-    gap:12px;
+    gap:10px;
 }
 
 .ten-row{
@@ -162,8 +159,8 @@ h1{
 }
 
 .ten-label{
-    width:40px;
-    font-size:22px;
+    width:34px;
+    font-size:20px;
     font-weight:bold;
 }
 
@@ -183,8 +180,8 @@ h1{
 }
 
 .box{
-    width:22px;
-    height:22px;
+    width:20px;
+    height:20px;
     border:2px solid #222;
     box-sizing:border-box;
 }
@@ -201,36 +198,36 @@ h1{
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:16px;
+    font-size:14px;
     font-weight:bold;
     background:#f2f2f2;
 }
 
 .hint-button{
     width:100%;
-    min-height:56px;
-    margin-top:14px;
-    font-size:22px;
-    border-radius:10px;
+    min-height:50px;
+    margin-top:12px;
+    font-size:20px;
+    border-radius:8px;
     border:1px solid #777;
     background:#efefef;
 }
 
 .answer-hint{
-    margin-top:24px;
-    margin-bottom:52px;
+    margin-top:20px;
+    margin-bottom:40px;
 }
 
 .multi-grid{
     display:grid;
-    grid-template-columns:repeat(10, 24px);
+    grid-template-columns:repeat(10, 22px);
     gap:3px;
-    margin-top:14px;
+    margin-top:12px;
 }
 
 .multi-cell{
-    width:22px;
-    height:22px;
+    width:20px;
+    height:20px;
     border:1px solid #444;
 }
 
@@ -243,25 +240,25 @@ h1{
 }
 
 .div-hint-main{
-    font-size:30px;
+    font-size:26px;
     font-weight:bold;
-    margin-bottom:14px;
+    margin-bottom:12px;
 }
 
 .kuku-table-wrap{
     overflow-x:auto;
-    margin-top:18px;
+    margin-top:16px;
 }
 
 .kuku-table{
     border-collapse:collapse;
-    font-size:16px;
+    font-size:14px;
 }
 
 .kuku-table th,
 .kuku-table td{
-    width:34px;
-    height:32px;
+    width:30px;
+    height:28px;
     border:1px solid #777;
     text-align:center;
 }
@@ -322,8 +319,9 @@ h1{
 <div class="num" id="num2"></div>
 <div class="equal">＝</div>
 <input class="answer" id="answer" type="text" inputmode="numeric">
-<div class="result-box" id="resultBox"></div>
 </div>
+
+<div class="result-box" id="resultBox"></div>
 
 <div class="action-area">
 <button id="answerButton">こたえる</button>
@@ -339,7 +337,6 @@ h1{
 <audio id="wrongSound" src="wrong.mp3"></audio>
 
 <script>
-
 let mode = "add";
 let mulLevel = 4;
 
@@ -380,7 +377,6 @@ function getMulMax(){
 }
 
 function makeBox(type){
-
     if(type === "cross"){
         return `<span class="box cross-box">×</span>`;
     }
@@ -389,15 +385,12 @@ function makeBox(type){
 }
 
 function makeTenBlock(value,type="on"){
-
     let html = `<div class="ten-block">`;
 
     for(let row=0; row<2; row++){
-
         html += `<div class="ten-line">`;
 
         for(let col=1; col<=10; col++){
-
             const n = row * 10 + col;
 
             if(col === 6){
@@ -420,41 +413,32 @@ function makeTenBlock(value,type="on"){
 }
 
 function showAddSecondHint(){
-
     document.getElementById("hint2").innerHTML = `
         <div class="ten-hint answer-hint">
-
             <div class="ten-row">
                 <div class="ten-label">=</div>
                 ${makeTenBlock(num1 + num2,"on")}
             </div>
-
         </div>
     `;
 }
 
 function showSubSecondHint(){
-
     document.getElementById("hint2").innerHTML = `
         <div class="ten-hint answer-hint">
-
             <div class="ten-row">
                 <div class="ten-label">=</div>
                 ${makeTenBlock(num1 - num2,"on")}
             </div>
-
         </div>
     `;
 }
 
 function makeMultiGrid(rows,cols){
-
     let html = `<div class="multi-grid">`;
 
     for(let y=0; y<10; y++){
-
         for(let x=0; x<10; x++){
-
             if(y < rows && x < cols){
                 html += `<div class="multi-cell multi-on"></div>`;
             }else{
@@ -469,7 +453,6 @@ function makeMultiGrid(rows,cols){
 }
 
 function makeKukuTable(rowNum,colNum){
-
     let html = `<div class="kuku-table-wrap">`;
     html += `<table class="kuku-table">`;
 
@@ -482,12 +465,10 @@ function makeKukuTable(rowNum,colNum){
     html += `</tr>`;
 
     for(let row=1; row<=9; row++){
-
         html += `<tr>`;
         html += `<th class="${row===rowNum ? "kuku-head-active" : ""}">${row}</th>`;
 
         for(let col=1; col<=9; col++){
-
             const isAnswer = row===rowNum && col===colNum;
 
             html += `
@@ -506,15 +487,12 @@ function makeKukuTable(rowNum,colNum){
 }
 
 function setHints(){
-
     document.getElementById("hint1").innerHTML = "";
     document.getElementById("hint2").innerHTML = "";
 
     if(mode === "add"){
-
         document.getElementById("hint1").innerHTML = `
             <div class="ten-hint">
-
                 <div class="ten-row">
                     <div class="ten-label">${num1}</div>
                     ${makeTenBlock(num1,"on")}
@@ -528,16 +506,13 @@ function setHints(){
                 <button class="hint-button" onclick="showAddSecondHint()">
                     こたえのヒントを見る
                 </button>
-
             </div>
         `;
     }
 
     if(mode === "sub"){
-
         document.getElementById("hint1").innerHTML = `
             <div class="ten-hint">
-
                 <div class="ten-row">
                     <div class="ten-label">${num1}</div>
                     ${makeTenBlock(num1,"on")}
@@ -551,13 +526,11 @@ function setHints(){
                 <button class="hint-button" onclick="showSubSecondHint()">
                     こたえのヒントを見る
                 </button>
-
             </div>
         `;
     }
 
     if(mode === "mul"){
-
         document.getElementById("hint1").innerHTML = `
             ${makeMultiGrid(num1,num2)}
 
@@ -570,7 +543,6 @@ function setHints(){
     }
 
     if(mode === "div"){
-
         document.getElementById("hint1").innerHTML = `
             <div class="div-hint-main">
                 ${num2} × ？ = ${num1}
@@ -586,11 +558,11 @@ function setHints(){
 }
 
 function nextQuestion(){
-
     answered = false;
 
     resultBox.textContent = "";
     resultBox.style.background = "transparent";
+    resultBox.style.color = "";
 
     document.getElementById("nextButton").style.display = "none";
     document.getElementById("answerButton").style.display = "block";
@@ -598,7 +570,6 @@ function nextQuestion(){
     answerEl.value = "";
 
     if(mode === "add"){
-
         titleEl.textContent = "たしざん れんしゅう";
         operatorEl.textContent = "＋";
 
@@ -607,7 +578,6 @@ function nextQuestion(){
     }
 
     if(mode === "sub"){
-
         titleEl.textContent = "ひきざん れんしゅう";
         operatorEl.textContent = "－";
 
@@ -618,7 +588,6 @@ function nextQuestion(){
     }
 
     if(mode === "mul"){
-
         titleEl.textContent = "かけざん れんしゅう";
         operatorEl.textContent = "×";
 
@@ -629,7 +598,6 @@ function nextQuestion(){
     }
 
     if(mode === "div"){
-
         titleEl.textContent = "わりざん れんしゅう";
         operatorEl.textContent = "÷";
 
@@ -647,7 +615,6 @@ function nextQuestion(){
 }
 
 function setMode(newMode){
-
     mode = newMode;
 
     document.getElementById("mulLevelArea").style.display =
@@ -657,7 +624,6 @@ function setMode(newMode){
 }
 
 function setMulLevel(level){
-
     mulLevel = level;
 
     document.querySelectorAll(".level-buttons button")
@@ -670,7 +636,6 @@ function setMulLevel(level){
 }
 
 function getCorrectAnswer(){
-
     if(mode === "add") return num1 + num2;
     if(mode === "sub") return num1 - num2;
     if(mode === "mul") return num1 * num2;
@@ -678,8 +643,13 @@ function getCorrectAnswer(){
     return correctAnswer;
 }
 
-function checkAnswer(){
+function playSound(soundId){
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;
+    sound.play();
+}
 
+function checkAnswer(){
     if(answerEl.value === "") return;
 
     totalCount++;
@@ -688,33 +658,28 @@ function checkAnswer(){
     const correct = getCorrectAnswer();
 
     if(answer === correct){
-
         correctCount++;
         comboCount++;
 
         answered = true;
 
-        resultBox.textContent =
-            `せいかい🌸 ${comboCount}れんぞく！`;
-
+        resultBox.textContent = `せいかい🌸 ${comboCount}れんぞく！`;
         resultBox.style.background = "#f7cfd7";
         resultBox.style.color = "#c00000";
 
-        document.getElementById("correctSound").play();
+        playSound("correctSound");
 
         document.getElementById("nextButton").style.display = "block";
         document.getElementById("answerButton").style.display = "none";
 
     }else{
-
         comboCount = 0;
 
         resultBox.textContent = "ちがうよ😱";
-
         resultBox.style.background = "#d7f0d7";
         resultBox.style.color = "#008000";
 
-        document.getElementById("wrongSound").play();
+        playSound("wrongSound");
 
         answerEl.select();
     }
@@ -729,9 +694,7 @@ document.getElementById("nextButton")
     .addEventListener("click",nextQuestion);
 
 answerEl.addEventListener("keydown",function(e){
-
     if(e.key === "Enter"){
-
         e.preventDefault();
 
         if(answered){
