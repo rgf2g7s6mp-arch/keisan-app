@@ -148,6 +148,7 @@ h1{
 }
 
 @media (max-width: 700px){
+
     body{
         padding:16px;
     }
@@ -211,26 +212,40 @@ h1{
 <body>
 
 <div class="top-area">
+
     <h1 id="title">たしざん れんしゅう</h1>
 
     <div class="menu">
-        <button onclick="setMode('add')">つぎのもんだい（たしざん）</button>
-        <button onclick="setMode('sub')">つぎのもんだい（ひきざん）</button>
+        <button onclick="setMode('add')">
+            つぎのもんだい（たしざん）
+        </button>
+
+        <button onclick="setMode('sub')">
+            つぎのもんだい（ひきざん）
+        </button>
     </div>
 
     <div>
         <div class="shortcut">※Ctrl+z</div>
         <div class="shortcut">※Ctrl+x</div>
     </div>
+
 </div>
 
 <div class="problem">
+
     <div class="num" id="num1"></div>
+
     <div class="operator" id="operator">＋</div>
+
     <div class="num" id="num2"></div>
+
     <div class="equal">＝</div>
+
     <input class="answer" id="answer" type="text" inputmode="numeric">
+
     <div class="result-box" id="resultBox"></div>
+
 </div>
 
 <div class="next-guide" id="nextGuide">
@@ -242,34 +257,54 @@ h1{
     <button id="nextButton">つぎのもんだい</button>
 </div>
 
+<audio id="correctSound" src="correct.mp3"></audio>
+<audio id="wrongSound" src="wrong.mp3"></audio>
+
 <div class="hint-title">💡ヒント</div>
 
 <div class="hint-grid">
+
     <div id="hint1L"></div>
     <div id="hint1R"></div>
+
     <div id="hint2L"></div>
     <div id="hint2R"></div>
+
     <div id="hint3L"></div>
     <div id="hint3R"></div>
+
     <div id="hint4L"></div>
     <div id="hint4R"></div>
+
 </div>
 
 <script>
+
 let mode = "add";
+
 let num1 = 0;
 let num2 = 0;
+
 let answered = false;
 
 const titleEl = document.getElementById("title");
+
 const num1El = document.getElementById("num1");
 const num2El = document.getElementById("num2");
+
 const operatorEl = document.getElementById("operator");
+
 const answerEl = document.getElementById("answer");
+
 const resultBox = document.getElementById("resultBox");
+
 const nextGuide = document.getElementById("nextGuide");
+
 const answerButton = document.getElementById("answerButton");
 const nextButton = document.getElementById("nextButton");
+
+const correctSound = document.getElementById("correctSound");
+const wrongSound = document.getElementById("wrongSound");
 
 function rand10(){
     return Math.floor(Math.random() * 10) + 1;
@@ -280,55 +315,76 @@ function rand20(){
 }
 
 function makeBoxRow(count){
+
     let html = '<div class="apple-row">';
 
     for(let i = 0; i < 5; i++){
+
         html += `<span class="box ${i < count ? "on" : "off"}"></span>`;
     }
 
     html += '</div>';
+
     return html;
 }
 
 function setHints(left,right){
+
     for(let i = 0; i < 4; i++){
+
         const leftCount = Math.min(5, Math.max(0, left - i * 5));
         const rightCount = Math.min(5, Math.max(0, right - i * 5));
 
-        document.getElementById(`hint${i + 1}L`).innerHTML = makeBoxRow(leftCount);
-        document.getElementById(`hint${i + 1}R`).innerHTML = makeBoxRow(rightCount);
+        document.getElementById(`hint${i + 1}L`).innerHTML
+            = makeBoxRow(leftCount);
+
+        document.getElementById(`hint${i + 1}R`).innerHTML
+            = makeBoxRow(rightCount);
     }
 }
 
 function setMode(newMode){
+
     mode = newMode;
+
     nextQuestion();
 }
 
 function nextQuestion(){
+
     answered = false;
 
     resultBox.textContent = "";
+
     resultBox.style.background = "transparent";
     resultBox.style.color = "";
 
     nextButton.style.display = "none";
+
     answerButton.style.display = "inline-block";
 
     answerEl.value = "";
 
     if(mode === "add"){
+
         titleEl.textContent = "たしざん れんしゅう";
+
         operatorEl.textContent = "＋";
+
         num1 = rand10();
         num2 = rand10();
+
     }else{
+
         titleEl.textContent = "ひきざん れんしゅう";
+
         operatorEl.textContent = "－";
 
         do{
+
             num1 = rand20();
             num2 = rand20();
+
         }while(num1 < num2);
     }
 
@@ -337,71 +393,104 @@ function nextQuestion(){
 
     setHints(num1,num2);
 
-    nextGuide.textContent = "▶「せいかい」したらEnterおしてね";
+    nextGuide.textContent
+        = "▶「せいかい」したらEnterおしてね";
 
     answerEl.focus();
 }
 
 function checkAnswer(){
+
     if(answerEl.value === "") return;
 
     const answer = Number(answerEl.value);
-    const correct = mode === "add" ? num1 + num2 : num1 - num2;
+
+    const correct = mode === "add"
+        ? num1 + num2
+        : num1 - num2;
 
     if(answer === correct){
+
         answered = true;
 
         resultBox.textContent = "せいかい🌸";
+
+        correctSound.currentTime = 0;
+        correctSound.play();
+
         resultBox.style.background = "#f7cfd7";
         resultBox.style.color = "#c00000";
 
-        nextGuide.textContent = "▶ Enter または「つぎのもんだい」";
+        nextGuide.textContent
+            = "▶ Enter または「つぎのもんだい」";
+
         nextButton.style.display = "inline-block";
+
         answerButton.style.display = "none";
 
     }else{
+
         resultBox.textContent = "ちがうよ😱";
+
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+
         resultBox.style.background = "#d7f0d7";
         resultBox.style.color = "#008000";
 
-        nextGuide.textContent = "もういちど こたえてね";
+        nextGuide.textContent
+            = "もういちど こたえてね";
+
         answerEl.select();
     }
 }
 
 answerEl.addEventListener("keydown", function(event){
+
     if(event.key === "Enter"){
+
         event.preventDefault();
 
         if(answered){
+
             nextQuestion();
+
         }else{
+
             checkAnswer();
         }
     }
 });
 
 answerButton.addEventListener("click", function(){
+
     checkAnswer();
 });
 
 nextButton.addEventListener("click", function(){
+
     nextQuestion();
 });
 
 document.addEventListener("keydown", function(event){
+
     if(event.ctrlKey && event.key.toLowerCase() === "z"){
+
         event.preventDefault();
+
         setMode("add");
     }
 
     if(event.ctrlKey && event.key.toLowerCase() === "x"){
+
         event.preventDefault();
+
         setMode("sub");
     }
 });
 
 nextQuestion();
+
 </script>
 
 </body>
