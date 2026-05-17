@@ -685,6 +685,25 @@ function checkAnswer(){
     }
 
     updateStatus();
+
+    if(totalCount >= 10){
+        setTimeout(function(){
+            alert(
+                `10もん おわり！\n\n`
+                + `せいかい：${correctCount} / ${totalCount}`
+            );
+
+            totalCount = 0;
+            correctCount = 0;
+            comboCount = 0;
+
+            updateStatus();
+
+            nextQuestion();
+
+        },300);
+    }
+
 }
 
 document.getElementById("answerButton")
