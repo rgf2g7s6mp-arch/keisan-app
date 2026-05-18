@@ -276,7 +276,6 @@ h1{
     color:#c00000;
     font-weight:bold;
 }
-
 </style>
 </head>
 
@@ -550,8 +549,8 @@ function setHints(){
 
             <button class="hint-button"
                 onclick="document.getElementById('hint2').innerHTML=
-                makeMultiGrid(num2,correctAnswer)">
-                もっとヒントを見る
+                makeKukuTable(num2,correctAnswer)">
+                九九表を見る
             </button>
         `;
     }
@@ -649,6 +648,24 @@ function playSound(soundId){
     sound.play();
 }
 
+function finishTenQuestions(){
+    setTimeout(function(){
+        alert(
+            `10もん おわり！\n\n`
+            + `せいかい：${correctCount} / ${totalCount}`
+        );
+
+        totalCount = 0;
+        correctCount = 0;
+        comboCount = 0;
+
+        updateStatus();
+
+        nextQuestion();
+
+    },300);
+}
+
 function checkAnswer(){
     if(answerEl.value === "") return;
 
@@ -687,23 +704,8 @@ function checkAnswer(){
     updateStatus();
 
     if(totalCount >= 10){
-        setTimeout(function(){
-            alert(
-                `10もん おわり！\n\n`
-                + `せいかい：${correctCount} / ${totalCount}`
-            );
-
-            totalCount = 0;
-            correctCount = 0;
-            comboCount = 0;
-
-            updateStatus();
-
-            nextQuestion();
-
-        },300);
+        finishTenQuestions();
     }
-
 }
 
 document.getElementById("answerButton")
@@ -726,7 +728,6 @@ answerEl.addEventListener("keydown",function(e){
 
 updateStatus();
 nextQuestion();
-
 </script>
 
 </body>
